@@ -1,29 +1,27 @@
 package com.spring.core.basic.paper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.spring.core.basic.config.PrinterAutoConfig;
+import com.spring.core.basic.config.PrinterConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
-@Component
-public class Printer {
+public class PaperMain {
 
-    private Paper paper;
+    public static void main(String[] args) {
 
-//    @Autowired
-    public Printer(Paper paper) {
+        //스프링 컨테이너 객체 생성
+        //자바코드로 빈을 등록한 예제
+        ApplicationContext context
+                = new AnnotationConfigApplicationContext(PrinterAutoConfig.class);
 
-//        this.paper = paper;
-    }
+        //xml로 빈을 등록한 예제
+//        ApplicationContext context
+//                = new GenericXmlApplicationContext("printerConfig.xml");
 
-/*    @Autowired
-    public void setPaper(Paper paper) {
-        this.paper = paper;
-    }*/
+        //컨테이너에서 스프링 빈을 취득
+        Printer printer = context.getBean(Printer.class);
 
-    //용지 출력 기능
-    public void printPaper() {
-        System.out.println("======= 출력 내용 =======");
-        for (String data: paper.datas) {
-            System.out.println("# " + data);
-        }
+        printer.printPaper();
     }
 }
